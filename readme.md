@@ -2,8 +2,8 @@
 
 ## deployed/snapshots here
 
-[click1](https://helpful-cajeta-a073c0.netlify.app)
-[click2](https://subtle-cobbler-2c3a25.netlify.app)
+[click1](https://stunning-elf-fc4630.netlify.app/)
+
 
 
 
