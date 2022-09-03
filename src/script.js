@@ -15,8 +15,24 @@ const canvas = document.querySelector("canvas.webgl");
 // Scene
 const scene = new THREE.Scene();
 
+//Fog
+//2 - near - how far the camera does the fog start
+//6 - far - how far the camera will be fog be fully opaque
+const fog = new THREE.Fog("#262837", 1, 15);
+scene.fog = fog;
+
 //textures
 const textureLoader = new THREE.TextureLoader();
+
+const doorColorTexture = textureLoader.load("/textures/door/color.jpg");
+const doorAlphaTexture = textureLoader.load("/textures/door/alpha.jpg");
+const doorAmbientOcculationTexture = textureLoader.load(
+  "/textures/door/ambientOcclusion.jpg"
+);
+const doorHeightTexture = textureLoader.load("/textures/door/height.jpg");
+const doorMetalnessTexture = textureLoader.load("/textures/door/metalness.jpg");
+const doorNormalTexture = textureLoader.load("/textures/door/normal.jpg");
+const doorRoughnessTexture = textureLoader.load("/textures/door/roughness.jpg");
 
 /* HOUSE Objects */
 
@@ -45,8 +61,22 @@ house.add(roof);
 
 //Door
 const door = new THREE.Mesh(
-  new THREE.PlaneBufferGeometry(2, 2),
-  new THREE.MeshStandardMaterial({ color: "#aa7b7b" })
+  new THREE.PlaneBufferGeometry(2.2, 2.2, 200, 100),
+  new THREE.MeshStandardMaterial({
+    map: doorColorTexture,
+    transparent: true,
+    alphaMap: doorAlphaTexture,
+    aoMap: doorAmbientOcculationTexture,
+    displacementMap: doorHeightTexture,
+    displacementScale: 0.1,
+    metalnessMap: doorMetalnessTexture,
+    normalMap: doorNormalTexture,
+    roughnessMap: doorRoughnessTexture,
+  })
+);
+door.geometry.setAttribute(
+  "uv2",
+  new THREE.Float32BufferAttribute(door.geometry.attributes.uv.array, 2)
 );
 
 door.position.y = 1;
@@ -177,11 +207,13 @@ controls.enableDamping = true;
 /**
  * Renderer
  */
+
 const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setClearColor("#262837");
 
 /**
  * Animate
