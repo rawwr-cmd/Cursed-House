@@ -57,7 +57,7 @@ grassAmbientOcculationTexture.repeat.set(8, 8);
 grassNormalTexture.repeat.set(8, 8);
 grassRoughnessTexture.repeat.set(8, 8);
 
-//repeating texture on x and y
+//repeating texture on u and v
 grassColorTexture.wrapS = THREE.RepeatWrapping;
 grassAmbientOcculationTexture.wrapS = THREE.RepeatWrapping;
 grassNormalTexture.wrapS = THREE.RepeatWrapping;
@@ -211,6 +211,13 @@ scene.add(moonLight);
 const doorLight = new THREE.PointLight("#ff7d46", 1, 7);
 doorLight.position.set(0, 2.2, 2.7);
 house.add(doorLight);
+
+//GHOSTS
+const ghost1 = new THREE.PointLight("#ff00ff", 2, 3);
+const ghost2 = new THREE.PointLight("#00ffff", 2, 3);
+const ghost3 = new THREE.PointLight("#ffff00", 2, 3);
+
+scene.add(ghost1, ghost2, ghost3);
 
 /**
  * Sizes
