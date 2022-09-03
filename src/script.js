@@ -173,6 +173,8 @@ for (let i = 0; i < 50; i++) {
   //it goes from -0.5 to 0.5
   grave.rotation.y = (Math.random() - 0.5) * 0.4;
   grave.rotation.z = (Math.random() - 0.5) * 0.4;
+
+  grave.castShadow = true;
   graves.add(grave);
 }
 
@@ -271,6 +273,48 @@ renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setClearColor("#262837");
 
+/* Shadows */
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+//cast shadows
+moonLight.castShadow = true;
+doorLight.castShadow = true;
+
+//ghost shadows
+ghost1.castShadow = true;
+ghost2.castShadow = true;
+ghost3.castShadow = true;
+
+//wall shadows
+walls.castShadow = true;
+
+//bushes shadows
+bush1.castShadow = true;
+bush2.castShadow = true;
+bush3.castShadow = true;
+bush4.castShadow = true;
+
+//floor shadow
+floor.receiveShadow = true;
+
+//optimizing shadows
+doorLight.shadow.mapSize.width = 256;
+doorLight.shadow.mapSize.height = 256;
+doorLight.shadow.camera.far = 7;
+
+ghost1.shadow.mapSize.width = 256;
+ghost1.shadow.mapSize.height = 256;
+ghost1.shadow.camera.far = 7;
+
+ghost2.shadow.mapSize.width = 256;
+ghost2.shadow.mapSize.height = 256;
+ghost2.shadow.camera.far = 7;
+
+ghost3.shadow.mapSize.width = 256;
+ghost3.shadow.mapSize.height = 256;
+ghost3.shadow.camera.far = 7;
+
 /**
  * Animate
  */
@@ -279,7 +323,22 @@ const clock = new THREE.Clock();
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
 
-  // Update objects
+  // Update ghosts
+  const ghost1Angle = elapsedTime * 0.4;
+  ghost1.position.x = Math.cos(ghost1Angle) * 4;
+  ghost1.position.z = Math.sin(ghost1Angle) * 4;
+  ghost1.position.y = Math.sin(elapsedTime * 3);
+
+  const ghost2Angle = -elapsedTime * 0.32;
+  ghost2.position.x = Math.cos(ghost2Angle) * 5;
+  ghost2.position.z = Math.sin(ghost2Angle) * 5;
+  ghost2.position.y = Math.sin(elapsedTime * 4) + Math.sin(elapsedTime * 2.5);
+
+  const ghost3Angle = -elapsedTime * 0.18;
+  ghost3.position.x =
+    Math.cos(ghost3Angle) * (7 + Math.sin(elapsedTime * 0.32));
+  ghost3.position.z = Math.sin(ghost3Angle) * (7 + Math.sin(elapsedTime * 0.5));
+  ghost3.position.y = Math.sin(elapsedTime * 5) + Math.sin(elapsedTime * 2);
 
   // Update controls
   controls.update();
